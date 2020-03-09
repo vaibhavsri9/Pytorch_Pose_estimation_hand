@@ -4,7 +4,7 @@ Pose estimation of hand using Pytorch with creation of custom dataset
 # Installation
 Make sure your ros environment is setup. 
 
-Install the openvr_ros package using this link : ()
+Install the openvr_ros package using this link :(https://github.com/vaibhavsri9/openvr_ros)
 
 # Usage 
 ```
