@@ -37,7 +37,7 @@ def main():
 
     bag = rosbag.Bag(args.bag_file, "r")
     bridge = CvBridge()
-    count = 0
+    count = 1
 
     for topic, msg, t in bag.read_messages(topics=[args.image_topic]):
         cv_img = bridge.compressed_imgmsg_to_cv2(msg, desired_encoding="passthrough")
