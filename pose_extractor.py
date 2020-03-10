@@ -24,7 +24,7 @@ from openvr_ros.msg import TrackedDevicePose
 # Constants
 
 
-def main():
+def pose_extractor():
 	"""
 	Extract the csv file with pose annotations
 	"""
@@ -53,7 +53,7 @@ def main():
 		rowow.append(msg.pose.orientation.w)
 		print(msg.pose)			
 	bag.close()
-	print(count)
+	return count
 	with open('All_poses.csv', 'wb') as f:
 		writer = csv.writer(f)
 		writer.writerow(rowx)
@@ -67,4 +67,4 @@ def main():
 #def Createsamples(input_file,N)  
 
 if __name__ == '__main__':
-    main()
+    pose_no = pose_extractor()
