@@ -15,8 +15,9 @@ image_extractor.py --bag_file <your bag file>
 pose_extractor.py --bag_file <your bag file>
 ```
 ![alt text](https://github.com/vaibhavsri9/Pytorch_Pose_estimation_hand/blob/master/Image/GraspAction.png "Grasp Action Depiction")
+
 Once you have a folder containing all the extracted images, we need to check the file which and change the location of the folder appropriately.
-![alt text](      "CSV file Format")
+![alt text](https://github.com/vaibhavsri9/Pytorch_Pose_estimation_hand/blob/master/Image/All_poses.png "CSV file Format")
 ```
 creat_dataset_pytorch.py
 ```
