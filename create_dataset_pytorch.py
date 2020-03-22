@@ -9,33 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
+from PIL import Image
 
-"""
-Code to check retrieval
-n = 65
-pose_df = pd.read_csv('All_poses.csv',header=None)
-pose_df =pose_df.T# image_names is a pandas series
-img_name = pose_df.iloc[n, 0]
-print('Image name: {}'.format(img_name))
-pose_info = pose_df.iloc[n, 1:]
-pose_info = np.asarray(pose_info)
-pose_info = pose_info.astype('float').reshape(1,7)
-print('Pose info shape: {}'.format(pose_info.shape))
-"""
-def image_show_with_pose(image):
-    """
-    Plot Image with Pose info
-    """
-    plt.imshow(image)
-    # Logic for showing the Pose in the given image given parameters for arms
-    plt.pause(0.01)
-    return
-"""
-Code to check Plotting
-plt.figure(img_name)
-image_show_with_pose(io.imread(os.path.join('test/', img_name)))
-plt.show()
-"""
 class HandPoseDataset(Dataset):
     """
     Hand Pose Dataset
@@ -49,9 +24,9 @@ class HandPoseDataset(Dataset):
         """
         self.pose_df = pd.read_csv(csv_file,header=None)
         self.pose_df = self.pose_df.T
-        print(self.pose_df)
+        #print(self.pose_df)
         self.root_dir = root_dir
-        print(self.root_dir)
+        #print(self.root_dir)
         self.transform = transform
 
     def __len__(self):
@@ -63,20 +38,29 @@ class HandPoseDataset(Dataset):
 
         img_name = os.path.join(self.root_dir,
                                 self.pose_df.iloc[idx, 0])
-        image = io.imread(img_name)
+        image = Image.open(img_name)
         pose_info = self.pose_df.iloc[idx, 1:]
         pose_info = np.asarray([pose_info])
-        pose_info = pose_info.astype('float').reshape(1,7)
-        sample = {'image': image, 'Pose': pose_info}
-        return sample
-            #if self.transform:
-            #    sample = self.transform(sample)
+        pose_info = pose_info.astype('float').reshape(1, 7)
+        pose_info = np.squeeze(pose_info)
 
+        if self.transform:
+            image= self.transform(image)
+            pose_info = torch.from_numpy(pose_info).float()
+        sample = image, pose_info
+
+        return sample
+
+
+"""
 
 pose_dataset = HandPoseDataset(csv_file='test/All_poses.csv',
                                     root_dir='test/')
+sample = pose_dataset[3]
+print(sample)
+"""
 
-
+"""
 for i in range(len(pose_dataset)):
     sample = pose_dataset[i]
     print(i, sample['image'].shape, sample['Pose'].shape)
@@ -88,3 +72,15 @@ for i in range(len(pose_dataset)):
     if i == 3:
         plt.show()
         break
+
+# Writing dataloader
+#dataloader =  DataLoader(pose_dataset,batch_size = 4,shuffle = True, num_workers =4)
+"""
+
+"""
+dataloader =  DataLoader(pose_dataset,batch_size = 4,shuffle = True, num_workers =1)
+for i_batch,sample_batched in enumerate(dataloader):
+    print(i_batch, sample_batched['image'])
+    if i_batch == 3:
+        break
+"""
