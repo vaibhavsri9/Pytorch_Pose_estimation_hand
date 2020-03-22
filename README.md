@@ -28,4 +28,4 @@ Once you have made changes to the root_dir and csv_file fields of the above file
 train_neural_network_pose_estimation.py
 ```
 Your results will appear with the MSE training loss.
-![alt text](          "MSE Loss")
+![alt text](https://github.com/vaibhavsri9/Pytorch_Pose_estimation_hand/blob/master/Image/MSELoss.png "MSE Loss")
